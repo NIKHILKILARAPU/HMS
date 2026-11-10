@@ -1,0 +1,31 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+        <div class="main_div">
+            <h3>Sign in</h3>
+            <p>Enter your credentials to login in</p>
+            <form action="login.php" method="post">
+              <select name="role" id="role">
+                <option value="">Select your Role</option>
+                <option value="Admin">Admin</option>
+                <option value="Doctor">Doctor</option>
+                <option value="patient">Patient</option>
+              </select>  
+                <br>
+                <input type="text" name="username" placeholder="Username" required>
+                <br>
+                <input type="password" name="password" placeholder="Password" required>
+                <br>
+                <div class="options">
+                    <input type="checkbox" id="rememberMe" name="rememberMe"> Remember Me
+                    <a href="#" style="margin-left: 10%;">Forgot Password</a>
+                </div>
+                <button type="submit">Login</button>
+            
+            </form>
+
+        </div>
+    </body>
+</html>

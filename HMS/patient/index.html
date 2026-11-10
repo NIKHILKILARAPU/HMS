@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ===== HEADER ===== -->
+    <div class="header">
+        <div class="left">
+            <img src="../imgs/logo.png" alt="Logo" class="logo">
+            <button class="nav-btn" onclick="toggleSidebar()">
+                ☰
+            </button>
+
+        </div>
+
+        <div class="right">
+            <button title="Notifications">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 -960 960 960">
+                    <path
+                        d="M160-200v-80h80v-280q0-83 50-147.5T420-792v-28q0-25 17.5-42.5T480-880q25 0 42.5 17.5T540-820v28q80 20 130 84.5T720-560v280h80v80H160Z" />
+                </svg>
+            </button>
+
+            <p id="patient_name">NIKHIL</p>
+            <button><img src="../imgs/defaultdp.png" alt="User" id="userdp"></button>
+        </div>
+    </div>
+
+    <!-- ===== MAIN CONTAINER ===== -->
+    <div class="container">
+
+        <!-- ===== SIDEBAR ===== -->
+        <div class="left_content">
+            <button onclick="showContent('dashboard', this)">Dashboard</button>
+            <button onclick="showContent('appointments', this)">Appointments</button>
+            <button onclick="showContent('prescriptions', this)">Prescriptions</button>
+            <button onclick="showContent('billing', this)">Billing</button>
+            <button onclick="showContent('telemedicine', this)">Telemedicine</button>
+            <button onclick="showContent('settings', this)">Settings</button>
+            <form action="../logout.php">
+                <button class="logout">Logout</button>
+            </form>
+            
+        </div>
+
+        <!-- ===== CONTENT AREA ===== -->
+        <div class="right_content">
+            <div id="dashboard" class="content">
+                <div class="welcome_board">
+                    <div>
+                        <img src="../imgs/welcome.png" alt="welcome_img">
+                    </div>
+                    <div>
+                        <h4>Welcome back,</h4>
+                        <h2 id="patient_name_welcome">NIKHIL</h2>
+                        <p>
+                            We would like to take this opportunity to welcome you to our practice and to thank you for
+                            choosing our physicians to participate in your healthcare. We look forward to providing you
+                            with personalized, comprehensive health care focusing on wellness and prevention</p>
+                    </div>
+
+                </div>
+                <div class="stats">
+                    <div class="stat_card">
+                        <div>
+                            <img src="../imgs/bloodpressure.png" alt="bp_icon">
+                        </div>
+                        <div>
+                            <p>Blood Pressure</p>
+                            <h3 id="bp">650</h3>
+
+                        </div>
+
+                    </div>
+                    <div class="stat_card">
+                        <div>
+                            <img src="../imgs/heartbeat.png" alt="bp_icon">
+                        </div>
+                        <div>
+                            <p>Heart Beat</p>
+                            <h3 id="hb">120/80</h3>
+
+                        </div>
+
+                    </div>
+                    <div class="stat_card">
+                        <div>
+                            <img src="../imgs/glucose.png" alt="bp_icon">
+                        </div>
+                        <div>
+                            <p>Glucose Level</p>
+                            <h3 id="glucose">88-75</h3>
+
+                        </div>
+
+                    </div>
+                    <div class="stat_card">
+                        <div>
+                            <img src="../imgs/bloodcount.png" alt="bp_icon">
+                        </div>
+                        <div>
+                            <p>Blood Count</p>
+                            <h3 id="bc">9,456/ml</h3>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="apt">
+                    <h2>Today Appointments</h2>
+                    <div>
+                        <table id="apt_table" class="tb">
+                            
+                            <tbody>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </div>
+            </div>
+            <div id="appointments" class="content">
+
+                <div class="apt_btns">
+                    <button onclick="showAppointmentTab('up_comming_apt', this)">Upcoming Appointments</button>
+                    <button onclick="showAppointmentTab('past_apt', this)">Past Appointments</button>
+                    <button onclick="showAppointmentTab('add_apt', this)">Add Appointment</button>
+                </div>
+
+                <div id="up_comming_apt" class="apt_content">
+                    <table id="up_apt_table" class="tb">
+                        
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="past_apt" class="apt_content">
+                    <table id="past_apt_table" class="tb">
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="add_apt" class="apt_content">
+
+                    <form id="add_apt_form" class="apt_form" action="../patientphpactions/add_appointment.php" method="post">
+
+                        <div class="form_row">
+                            <label for="doctor_name">Doctor Name</label>
+                            <input type="text" id="doctor_name" name="doctor_name" placeholder="Doctor name" required>
+                        </div>
+
+                        <div class="form_row">
+                            <label for="date">Date</label>
+                            <input type="date" id="date" name="date" required>
+                        </div>
+
+                        <div class="form_row">
+                            <label for="time">Time</label>
+                            <input type="time" id="time" name="time" required>
+                        </div>
+
+                        <div class="form_row full">
+                            <label for="reason">Reason</label>
+                            <textarea id="reason" name="reason" placeholder="Reason for appointment"
+                                required></textarea>
+                        </div>
+
+                        <div class="form_actions">
+                            <button type="submit">Add Appointment</button>
+                        </div>
+
+                    </form>
+                </div>
+
+
+            </div>
+
+            <div id="prescriptions" class="content">
+                <div class="prescription_section">
+                    <h2>Prescription History</h2>
+                    <table id="pres_table" class="prescription_tb">
+                        <thead>
+                            <tr>
+                                <th>Doctor</th>
+                                <th>Date</th>
+                                <th>Medication</th>
+                                <th>Dosage</th>
+                                <th>Frequency</th>
+                                <th>Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div id="billing" class="content">
+                <div>
+                    <h2>Billing History</h2>
+                    <table id="bill_table" class="prescription_tb">
+                        <thead>
+                            <tr>
+                                <th>Bill ID</th>
+                                <th>Date</th>
+                                <th>Amount</th>
+                                <th>Tax</th>
+                                <th>Total</th>
+                                <th>Description</th>
+                            </tr>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="telemedicine" class="content">
+
+                <h2 class="section_title">Telemedicine Appointments</h2>
+
+                <table class="tele_tb" id="tele_table">
+                    <thead>
+                        <tr>
+                            <th>Appointment ID</th>
+                            <th>Doctor</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Notes</th>
+                            <th>Join</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- JS will fill -->
+                    </tbody>
+                </table>
+
+            </div>
+           
+
+            <div id="settings" class="content">
+
+                <h2 class="section_title">Settings</h2>
+
+                <form class="settings_form">
+
+                    <div class="settings_group">
+                        <h4>Profile Settings</h4>
+
+                        <div class="settings_row">
+                            <label>Full Name</label>
+                            <input type="text" value="NIKHIL">
+                        </div>
+
+                        <div class="settings_row">
+                            <label>Email</label>
+                            <input type="email" value="nikhil@email.com">
+                        </div>
+
+                        <div class="settings_row">
+                            <label>Phone</label>
+                            <input type="tel" value="9876543210">
+                        </div>
+                    </div>
+
+                    <div class="settings_group">
+                        <h4>Account Settings</h4>
+
+                        <div class="settings_row">
+                            <label>Change Password</label>
+                            <input type="password" placeholder="New password">
+                        </div>
+
+                        <div class="settings_row">
+                            <label>Confirm Password</label>
+                            <input type="password" placeholder="Confirm password">
+                        </div>
+                    </div>
+
+
+                    <div class="settings_actions">
+                        <button type="submit">Save Changes</button>
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+    <div class="overlay" onclick="toggleSidebar()"></div>
+
+
+    <script src="patient1.js"></script>
+</body>
+
+</html>

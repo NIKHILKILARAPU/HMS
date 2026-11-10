@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ===== HEADER ===== -->
+    <div class="header">
+        <div class="left">
+            <img src="../imgs/logo.png" alt="Logo" class="logo">
+            <button class="nav-btn" onclick="toggleSidebar()">
+                ☰
+            </button>
+
+        </div>
+
+        <div class="right">
+            <button title="Notifications">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 -960 960 960">
+                    <path
+                        d="M160-200v-80h80v-280q0-83 50-147.5T420-792v-28q0-25 17.5-42.5T480-880q25 0 42.5 17.5T540-820v28q80 20 130 84.5T720-560v280h80v80H160Z" />
+                </svg>
+            </button>
+
+            <p id="patient_name">NIKHIL</p>
+            <button><img src="../imgs/defaultdp.png" alt="User" id="userdp"></button>
+        </div>
+    </div>
+
+    <!-- ===== MAIN CONTAINER ===== -->
+    <div class="container">
+
+        <!-- ===== SIDEBAR ===== -->
+        <aside class="left_content" id="sidebar">
+            <div class="brand">
+                <img src="../imgs/logo.png" alt="Logo" class="logo_sm">
+                <h3>HMS Admin</h3>
+            </div>
+            <nav class="nav">
+                <button onclick="showContent('dashboard', this)" class="active">Dashboard</button>
+                <button onclick="showContent('appointments', this)">Appointments</button>
+                <button onclick="showContent('doctors', this)">Doctors</button>
+                <button onclick="showContent('patients', this)">Patients</button>
+                <button onclick="showContent('operation_theatre', this)">Operation Theatre</button>
+                <button onclick="showContent('laboratory', this)">Laboratory</button>
+                <button onclick="showContent('inventory', this)">Inventory</button>
+                <button onclick="showContent('billing', this)">Billing</button>
+                <button onclick="showContent('settings', this)">Settings</button>
+            </nav>
+
+           <form action="../logout.php" method="post">
+             <div style="margin-top:auto">
+                
+                <button class="logout-btn" type="submit">Logout</button>
+            </div>
+           </form>
+        </aside>
+
+        <!-- ===== CONTENT AREA ===== -->
+        <main class="right_content">
+
+            <!-- ===== DASHBOARD ===== -->
+            <div id="dashboard" class="content active">
+                <div class="welcome_board">
+                    <div>
+                        <h4>Welcome back,</h4>
+                        <h2 id="doc_name">Dr. Nikhil</h2>
+                        <p>Here's a quick overview of your practice and today's highlights.</p>
+                    </div>
+
+                    <div style="margin-left:auto; display:flex; gap:12px; align-items:center;">
+                        <button class="view_btn"
+                            onclick="showContent('appointments', document.querySelector('.left_content button:nth-child(2)'))">View
+                            Appointments</button>
+                        <button class="view_btn"
+                            onclick="showContent('patients', document.querySelector('.left_content button:nth-child(3)'))">Patient
+                            List</button>
+                    </div>
+                </div>
+
+                <!-- Stats -->
+                <div class="stats">
+                    <div class="stat_card">
+                        <h3 id="stat_upcoming">12</h3>
+                        <p>Total Appointments</p>
+                    </div>
+                    <div class="stat_card">
+                        <h3 id="stat_patients">254</h3>
+                        <p>Total Patients</p>
+                    </div>
+                    <div class="stat_card">
+                        <h3 id="stat_pres">46</h3>
+                        <p>Prescriptions</p>
+                    </div>
+                    <div class="stat_card">
+                        <h3 id="stat_doc">4</h3>
+                        <p>Total Doctors</p>
+                    </div>
+                    <div class="stat_card">
+                        <h3 id="stat_earn">₹ 82,400</h3>
+                        <p>Earnings (This Month)</p>
+                    </div>
+                </div>
+
+                <!-- Quick tables -->
+                <div class="columns">
+                    <section>
+                        <h3 style="margin-bottom:12px;">Today's Appointments</h3>
+                        <div class="tb">
+                            <table id="apt_table">
+                                <thead>
+                                    <tr>
+                                        <th>Appointment ID</th>
+                                        <th>Name</th>
+                                        <th>Doctor</th>
+                                        <th>Date</th>
+                                        <th>Time</th>
+                                        <th>Notes</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+
+
+                        <!-- Recent prescriptions removed -->
+
+                    </section>
+
+                </div>
+            </div>
+
+            <!-- ===== APPOINTMENTS ===== -->
+            <div id="appointments" class="content">
+                <h2 class="apt">Appointments</h2>
+
+                <div class="apt_btns">
+                    <button onclick="showAppointmentTab('up_comming_apt', this)" class="active">Upcoming</button>
+                    <button onclick="showAppointmentTab('past_apt', this)">Past</button>
+                    <button onclick="showAppointmentTab('add_apt', this)">Add Appointment</button>
+                </div>
+
+                <div id="up_comming_apt" class="apt_content active">
+                    <div class="tb">
+                        <table id="up_apt_table">
+                            <thead>
+                                <tr>
+                                    <th>Appointment ID</th>
+                                    <th>Name</th>
+                                    <th>Doctor</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="past_apt" class="apt_content">
+                    <div class="tb">
+                        <table id="past_apt_table">
+                            <thead>
+                                <tr>
+                                    <th>Appointment ID</th>
+                                    <th>Name</th>
+                                    <th>Doctor</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="add_apt" class="apt_content">
+                    <form class="apt_form" id="add_apt_form" action="../phpactions/create_appointment.php"
+                        method="POST">
+                        <div class="form_row">
+                            <label>Patient Name</label>
+                            <input type="text" id="new_name" name="new_name" required>
+                        </div>
+                        <div class="form_row">
+                            <label>Doctor Name</label>
+                            <input type="text" id="new_doctor_name" name="new_doctor_name" required>
+                        </div>
+                        <div class="form_row">
+                            <label>Date</label>
+                            <input type="date" id="new_date" name="new_date" required>
+                        </div>
+                        <div class="form_row">
+                            <label>Time</label>
+                            <input type="time" id="new_time" name="new_time" required>
+                        </div>
+                        <div class="form_row full">
+                            <label>Treatment / Notes</label>
+                            <textarea id="new_treatment" name="new_treatment"></textarea>
+                        </div>
+                        <div class="form_actions">
+                            <button onclick="addAppointment()">Add Appointment</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- ===== DOCTORS ===== -->
+            <div id="doctors" class="content">
+                <h2 class="apt">Doctors</h2>
+
+                <div class="apt_btns">
+                    <button onclick="showDoctorTab('all_doctors', this)" class="active">All Doctors</button>
+                    <button onclick="showDoctorTab('add_doctor', this)">Add Doctor</button>
+                </div>
+
+                <div id="all_doctors" class="apt_content active">
+                    <div class="tb">
+                        <table id="doctors_table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Specialty</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="add_doctor" class="apt_content">
+                    <form class="apt_form" id="add_doctor_form" action="../phpactions/create_doctor.php" method="POST">
+                        <div class="form_row">
+                            <label>Doctor Name</label>
+                            <input type="text" id="doc_name" name="doc_name" placeholder="Dr. Name" required>
+                        </div>
+                        <div class="form_row">
+                            <label>Specialty</label>
+                            <input type="text" id="doc_specialty" name="doc_specialty" placeholder="e.g., Cardiology"
+                                required>
+                        </div>
+                        <div class="form_row">
+                            <label>Email</label>
+                            <input type="email" id="doc_email" name="doc_email" placeholder="doctor@hms.com" required>
+                        </div>
+                        <div class="form_row">
+                            <label>Phone</label>
+                            <input type="text" id="doc_phone" name="doc_phone" placeholder="9876543210" required>
+                        </div>
+                        <div class="form_actions">
+                            <button onclick="addDoctor()">Add Doctor</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- ===== PATIENTS ===== -->
+            <div id="patients" class="content">
+                <h2 class="apt">Patients</h2>
+
+                <div class="apt_btns">
+                    <button onclick="showPatientTab('all_patients', this)" class="active">All Patients</button>
+                    <button onclick="showPatientTab('add_patient', this)">Add Patient</button>
+                </div>
+
+                <div id="all_patients" class="apt_content active">
+                    <div class="tb">
+                        <table id="patients_table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Age</th>
+                                    <th>Phone</th>
+                                    <th>Email</th>
+                                    <th>Address</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="add_patient" class="apt_content">
+                    <form class="apt_form" id="add_patient_form" action="../phpactions/create_patient.php" method="POST">
+                        <div class="form_row">
+                            <label>Patient Name</label>
+                            <input type="text" id="pat_name" name="pat_name" placeholder="Full Name" required>
+                        </div>
+                        <div class="form_row">
+                            <label>Age</label>
+                            <input type="number" id="pat_age" name="pat_age" placeholder="25">
+                        </div>
+                        <div class="form_row">
+                            <label>Phone</label>
+                            <input type="text" id="pat_phone" name="pat_phone" placeholder="9876543210">
+                        </div>
+                        <div class="form_row full">
+                            <label>Address</label>
+                            <input type="text" id="pat_address" name="pat_address" placeholder="House, Street, City">
+                        </div>
+                        <div class="form_row full">
+                            <label>Email</label>
+                            <input type="email" id="pat_email" name="pat_email" placeholder="patient@email.com">
+                        </div>
+                        <div class="form_actions">
+                            <button type="submit">Add Patient</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Prescriptions section removed -->
+
+            <!-- ===== LABORATORY ===== -->
+            <div id="laboratory" class="content">
+                <h2 class="apt">Laboratory</h2>
+
+                <div class="apt_btns">
+                    <button onclick="showLabTab('all_labs', this)" class="active">All Labs</button>
+                    <button onclick="showLabTab('add_lab', this)">Add Lab</button>
+                </div>
+
+                <div id="all_labs" class="apt_content active">
+                                       <div class="tb">
+                        <table id="lab_table">
+                            <thead>
+                                <tr>
+                                    <th>Lab ID</th>
+                                    <th>Lab Name</th>
+                                    <th>Location</th>
+                                    <th>Head</th>
+                                    <th>Tests Available</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="add_lab" class="apt_content">
+                    <form class="apt_form" id="add_lab_form" action="../phpactions/create_lab.php" method="POST">
+                        <div class="form_row">
+                            <label>Lab Name</label>
+                            <input type="text" id="lab_name" name="lab_name" placeholder="e.g., Pathology Lab">
+                        </div>
+                        <div class="form_row">
+                            <label>Location</label>
+                            <input type="text" id="lab_location" name="lab_location"
+                                placeholder="e.g., Ground Floor, Block A">
+                        </div>
+                        <div class="form_row">
+                            <label>Lab Head/Technician</label>
+                            <input type="text" id="lab_head" name="lab_head" placeholder="e.g., Dr. Name">
+                        </div>
+                        <div class="form_row full">
+                            <label>Tests Available</label>
+                            <textarea id="lab_tests" name="lab_tests"
+                                placeholder="e.g., Blood Test, X-ray, Ultrasound, CT Scan"></textarea>
+                        </div>
+                        <div class="form_actions">
+                            <button type="submit">Add Laboratory</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- ===== BILLING ===== -->
+            <div id="billing" class="content active">
+                <h2 class="apt">Billing</h2>
+
+                <div class="apt_btns">
+                    <button onclick="showBillingTab('all_billing', this)" class="active">All Invoices</button>
+                    <button onclick="showBillingTab('add_billing', this)">Create Invoice</button>
+                </div>
+
+                <div id="all_billing" class="apt_content active">
+                    <div class="tb">
+                        <table id="billing_table">
+                            <thead>
+                                <tr>
+                                    <th>Bill ID</th>
+                                    <th>Patient</th>
+                                    <th>Date</th>
+                                    <th>Amount</th>
+                                    <th>Tax</th>
+                                    <th>Total</th>
+                                    <th>Description</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="add_billing" class="apt_content">
+                    <form class="apt_form" id="add_billing_form" action="../phpactions/create_bill.php" method="POST">
+                        <div class="form_row">
+                            <label>Patient Name</label>
+                            <input type="text" id="bill_patient" name="patient_name" placeholder="Patient name">
+                        </div>
+                        <div class="form_row">
+                            <label>Amount</label>
+                            <input type="number" id="bill_amount" name="amount" placeholder="5000" min="1">
+                        </div>
+                        <div class="form_row">
+                            <label>Tax (%)</label>
+                            <input type="number" id="bill_tax" name="tax" placeholder="18" min="0" max="100">
+                        </div>
+                        <div class="form_row full">
+                            <label>Description</label>
+                            <textarea id="bill_description" name="description"
+                                placeholder="e.g., General consultation, medicines, tests"></textarea>
+                        </div>
+                        <div class="form_actions">
+                            <button type="submit">Create Invoice</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- ===== INVENTORY ===== -->
+            <div id="inventory" class="content">
+                <h2 class="apt">Inventory</h2>
+
+                <div class="apt_btns">
+                    <button onclick="showInventoryTab('all_inventory', this)" class="active">All Items</button>
+                </div>
+
+                <div id="all_inventory" class="apt_content active">
+                    <div class="tb inventory_tb">
+                        <table id="inventory_table">
+                            <thead>
+                                <tr>
+                                    <th>Item</th>
+                                    <th>Quantity</th>
+                                    <th>Priority</th>
+                                    <th>Notes</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== LAB REPORTS ===== -->
+            <div id="lab_reports" class="content">
+                <h2>Lab Reports</h2>
+                <div class="lab_tb">
+                    <table id="lab_reports_table">
+                        <thead>
+                            <tr>
+                                <th>Test</th>
+                                <th>Date</th>
+                                <th>Doctor</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ===== SURGERIES ===== -->
+            <div id="surgeries" class="content">
+                <h2>Surgeries</h2>
+
+                <div class="surgeries_top" style="display:flex; gap:20px; flex-wrap:wrap;">
+                    <form class="surgery_form" style="flex:1; min-width:320px;">
+                        <div class="form_row">
+                            <label>Patient</label>
+                            <input type="text" id="surg_patient" placeholder="Patient name">
+                        </div>
+
+                        <div style="display:flex; gap:12px;">
+                            <div class="form_row" style="flex:1;">
+                                <label>Date</label>
+                                <input type="date" id="surg_date">
+                            </div>
+                            <div class="form_row" style="width:140px;">
+                                <label>Time</label>
+                                <input type="time" id="surg_time">
+                            </div>
+                        </div>
+
+                        <div class="form_row">
+                            <label>Procedure</label>
+                            <input type="text" id="surg_procedure" placeholder="e.g., Appendectomy">
+                        </div>
+
+                        <div style="display:flex; gap:12px;">
+                            <div class="form_row" style="flex:1;">
+                                <label>Operating Room</label>
+                                <input type="text" id="surg_or" placeholder="OR 1">
+                            </div>
+                            <div class="form_row" style="width:200px;">
+                                <label>Surgeon</label>
+                                <input type="text" id="surg_surgeon" placeholder="Dr. Name">
+                            </div>
+                        </div>
+
+                        <div class="form_row full">
+                            <label>Notes</label>
+                            <textarea id="surg_notes" placeholder="Optional notes..."></textarea>
+                        </div>
+
+                        <div class="form_actions">
+                            <button onclick="addSurgery()">Schedule Surgery</button>
+                        </div>
+                    </form>
+
+                </div>
+
+                <h3 style="margin-top:20px;">Scheduled Surgeries</h3>
+                <div class="tb surgeries_tb">
+                    <table id="surgeries_table">
+                        <thead>
+                            <tr>
+                                <th>Patient</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Procedure</th>
+                                <th>OR</th>
+                                <th>Surgeon</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- ===== OPERATION THEATRE ===== -->
+            <div id="operation_theatre" class="content">
+                <h2 class="apt">Operation Theatre</h2>
+
+                <div class="apt_btns">
+                    <button onclick="showOTTab('all_rooms', this)" class="active">All Rooms</button>
+                    <button onclick="showOTTab('add_room', this)">Add Room</button>
+                </div>
+
+                <div id="all_rooms" class="apt_content active">
+                   
+                    <div class="tb">
+                        <table id="ot_table">
+                            <thead>
+                                <tr>
+                                    <th>Room Number</th>
+                                    <th>Name</th>
+                                    <th>Capacity</th>
+                                    <th>Equipment</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="add_room" class="apt_content">
+                    <form class="apt_form" id="add_room_form" action="../phpactions/create_operationroom.php"
+                        method="POST">
+                        <div class="form_row">
+                            <label>Room Number</label>
+                            <input type="text" id="room_number" name="room_number" placeholder="e.g., OR-1">
+                        </div>
+                        <div class="form_row">
+                            <label>Room Name</label>
+                            <input type="text" id="room_name" name="room_name"
+                                placeholder="e.g., Main Operation Theatre">
+                        </div>
+                        <div class="form_row">
+                            <label>Capacity</label>
+                            <input type="number" id="room_capacity" name="room_capacity" placeholder="5" min="1">
+                        </div>
+                        <div class="form_row full">
+                            <label>Equipment Available</label>
+                            <textarea id="room_equipment" name="room_equipment"
+                                placeholder="e.g., Surgical lights, Monitors, Anesthesia machine"></textarea>
+                        </div>
+                        <div class="form_actions">
+                            <button onclick="addOTRoom()">Add Room</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- ===== SETTINGS ===== -->
+            <div id="settings" class="content">
+                <h2>Settings</h2>
+
+                <div class="settings_container">
+                    <form class="settings_form" onsubmit="event.preventDefault(); saveSettings();">
+                        <!-- Profile Section -->
+                        <div class="settings_group">
+                            <div class="group_header">
+                                <h4>👤 Profile</h4>
+                                <p>Manage your profile information</p>
+                            </div>
+
+                            <div class="settings_row">
+                                <label>Profile Picture</label>
+                                <div class="avatar_row">
+                                    <img id="avatar_preview" src="../imgs/defaultdp.png" alt="avatar">
+                                    <div>
+                                        <input type="file" id="setting_avatar" accept="image/*"
+                                            onchange="previewAvatar(event)">
+                                        <small>JPG or PNG, max 2MB</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="settings_row">
+                                <label>Display Name</label>
+                                <input type="text" id="setting_name" value="Admin User" placeholder="Your name">
+                            </div>
+
+                            <div class="settings_row">
+                                <label>Email Address</label>
+                                <input type="email" id="setting_email" value="admin@hms.com"
+                                    placeholder="your@email.com">
+                            </div>
+                        </div>
+
+                    </form>
+
+                    <!-- Preferences Section -->
+                    <div class="settings_group">
+                        <div class="group_header">
+                            <h4>👨‍💼 Add Admin</h4>
+                            <p>Create new administrator account</p>
+                        </div>
+
+                        <form action="../phpactions/create_admin.php" method="post">
+                            <div class="settings_row">
+                                <label>Admin Name</label>
+                                <input type="text" id="admin_name" name="admin_name" placeholder="Full name">
+                            </div>
+
+                            <div class="settings_row">
+                                <label>Email Address</label>
+                                <input type="email" id="admin_email" name="admin_email" placeholder="admin@hms.com">
+                            </div>
+
+                            <div class="settings_row">
+                                <label>Phone Number</label>
+                                <input type="text" id="admin_phone" name="admin_phone" placeholder="9876543210">
+                            </div>
+
+                            <div class="settings_row">
+                                <label>Password</label>
+                                <input type="password" id="admin_password" name="admin_password"
+                                    placeholder="Enter password" minlength="6">
+                            </div>
+
+                            <div class="settings_actions" style="margin-top:12px; border:none; padding:0;">
+                                <button type="submit" class="btn_primary">Create Admin</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <form class="settings_form" action="up_admin_detalis.php" method="post">
+
+                        <!-- Security Section -->
+                        <div class="settings_group">
+                            <div class="group_header">
+                                <h4>🔒 Security</h4>
+                                <p>Keep your account secure</p>
+                            </div>
+
+                            <div class="settings_row">
+                                <label>Current Password</label>
+                                <input type="password" id="current_password" name="current_password" placeholder="Current password" minlength="6">
+                                
+                            </div>
+                            <div class="settings_row">
+                                <label>Change Password</label>
+                                <input type="password" id="new_password" name="new_password" placeholder="New password" minlength="6">
+                                
+                            </div>
+                        </div>
+
+                        <div class="settings_actions">
+                            <button type="submit" class="btn_primary">Save Changes</button>
+                        </div>
+
+                        <div id="settings_msg" class="success_msg" style="display:none;">Settings saved successfully ✅
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+    </div>
+
+    </div>
+
+
+    <div class="overlay" onclick="toggleSidebar()"></div>
+
+
+    
+</body>
+<script src="admin1.js"></script>
+
+</html>

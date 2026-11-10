@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Doctor Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ===== HEADER ===== -->
+    <div class="header">
+        <div class="left">
+            <img src="../imgs/logo.png" alt="Logo" class="logo">
+            <button class="nav-btn" onclick="toggleSidebar()">☰</button>
+        </div>
+
+        <div class="right">
+            <button title="Notifications"><svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 -960 960 960">
+                    <path
+                        d="M160-200v-80h80v-280q0-83 50-147.5T420-792v-28q0-25 17.5-42.5T480-880q25 0 42.5 17.5T540-820v28q80 20 130 84.5T720-560v280h80v80H160Z" />
+                </svg></button>
+            <p id="patient_name">NIKHIL</p>
+            <button><img src="../imgs/defaultdp.png" alt="User" id="userdp"></button>
+        </div>
+    </div>
+
+    <!-- ===== MAIN ===== -->
+    <div class="container">
+
+        <!-- SIDEBAR -->
+        <div class="left_content">
+            <button onclick="showContent('dashboard', this)">Dashboard</button>
+            <button onclick="showContent('appointments', this)">Appointments</button>
+            <button onclick="showContent('patients', this)">Patients</button>
+            <button onclick="showContent('prescriptions', this)">Prescriptions</button>
+            <button onclick="showContent('inventory', this)">Inventory request</button>
+            <button onclick="showContent('telemedicine', this)">Telemedicine</button>
+            <button onclick="showContent('settings', this)">Settings</button>
+            <form action="../logout.php" method="post">
+                <button class="logout-btn" type="submit">Logout</button>
+            </form>
+        </div>
+
+        <!-- CONTENT -->
+        <div class="right_content">
+
+            <!-- DASHBOARD -->
+            <div id="dashboard" class="content">
+                <div class="welcome_board">
+                    <div>
+                        <h4>Welcome back,</h4>
+                        <h2 id="doc_name">Dr. Nikhil</h2>
+                        <p>Here's a quick overview of your practice and today's highlights.</p>
+                    </div>
+                </div>
+
+                <div class="stats">
+                    <div class="stat_card">
+                        <h3 id="stat_upcoming">12</h3>
+                        <p>Upcoming Appointments</p>
+                    </div>
+                    <div class="stat_card">
+                        <h3 id="stat_patients">254</h3>
+                        <p>Total Patients</p>
+                    </div>
+                    <div class="stat_card">
+                        <h3 id="stat_pres">46</h3>
+                        <p>Prescriptions</p>
+                    </div>
+                    
+                    <div class="stat_card">
+                        <h3>₹ 82,400</h3>
+                        <p>Earnings (This Month)</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- APPOINTMENTS -->
+            <div id="appointments" class="content">
+
+                <h2 class="apt">Appointments</h2>
+
+                <div class="apt_btns">
+                    <button onclick="showAppointmentTab('up_comming_apt', this)" class="active">Upcoming</button>
+                    <button onclick="showAppointmentTab('past_apt', this)">Past</button>
+                    <button onclick="showAppointmentTab('add_apt', this)">Add Appointment</button>
+                </div>
+
+                <!-- UPCOMING -->
+                <div id="up_comming_apt" class="apt_content active">
+                    <div class="tb">
+                        <table id="up_apt_table">
+                            <thead>
+                                <tr>
+                                    <th>Appointment ID</th>
+                                    <th>Name</th>
+                                    <th>Doctor</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- DB data -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- PAST -->
+                <div id="past_apt" class="apt_content">
+                    <div class="tb">
+                        <table id="past_apt_table">
+                            <thead>
+                                <tr>
+                                    <th>Appointment ID</th>
+                                    <th>Name</th>
+                                    <th>Doctor</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- DB data -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- ADD -->
+                <div id="add_apt" class="apt_content">
+                    <form class="apt_form" action="create_appointment.php" method="POST">
+
+                        <div class="form_row">
+                            <label>Patient Name</label>
+                            <input type="text" name="patient_name" required>
+                        </div>
+
+                        <div class="form_row">
+                            <label>Date</label>
+                            <input type="date" name="appointment_date" required>
+                        </div>
+
+                        <div class="form_row">
+                            <label>Time</label>
+                            <input type="time" name="appointment_time" required>
+                        </div>
+
+                        <div class="form_row full">
+                            <label>Treatment / Notes</label>
+                            <textarea name="treatment_notes" placeholder="Optional notes..."></textarea>
+                        </div>
+
+                        <div class="form_actions">
+                            <button type="submit">Add Appointment</button>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+
+            <!-- PATIENTS -->
+            <div id="patients" class="content">
+                <h2>Patients</h2>
+                <div class="tb">
+                    <table id="patient_table">
+                        <thead>
+                            <tr>
+                                <th>Patient ID</th>
+                                <th>Name</th>
+                                <th>Age</th>
+                                <th>Phone</th>
+                                <th>Mail</th>
+                                <th>Address</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- PRESCRIPTIONS -->
+            <!-- PRESCRIPTIONS -->
+            <div id="prescriptions" class="content">
+
+                <h2>Prescriptions</h2>
+
+                <div class="apt_btns">
+                    <button onclick="showPrescriptionTab('prescription_list', this)" class="active">
+                        Prescription List
+                    </button>
+                    <button onclick="showPrescriptionTab('add_prescription', this)">
+                        Add Prescription
+                    </button>
+                </div>
+
+                <!-- PRESCRIPTION LIST -->
+                <div id="prescription_list" class="apt_content active">
+                    <div class="tb">
+                        <table id="prescription_table">
+                            <thead>
+                                <tr>
+                                    <th>Prescription ID</th>
+                                    <th>Patient</th>
+                                    <th>Date</th>
+                                    <th>Medicine</th>
+                                    <th>Dosage</th>
+                                    <th>Frequency</th>
+                                    <th>Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- DB data -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- ADD PRESCRIPTION -->
+                <div id="add_prescription" class="apt_content">
+                    <form class="apt_form" action="create_prescription.php" method="POST">
+
+                        <div class="form_row">
+                            <label>Patient Name</label>
+                            <input type="text" name="patient_name" required>
+                        </div>
+
+                        <div class="form_row">
+                            <label>Date</label>
+                            <input type="date" name="prescription_date" required>
+                        </div>
+
+                        <div class="form_row">
+                            <label>Medicine</label>
+                            <input type="text" name="medicine" required>
+                        </div>
+
+                        <div class="form_row">
+                            <label>Dosage</label>
+                            <input type="text" name="dosage" placeholder="e.g. 500mg" required>
+                        </div>
+
+                        <div class="form_row">
+                            <label>Frequency</label>
+                            <input type="text" name="frequency" placeholder="e.g. Twice daily" required>
+                        </div>
+
+                        <div class="form_row full">
+                            <label>Notes</label>
+                            <textarea name="notes" placeholder="Optional instructions..."></textarea>
+                        </div>
+
+                        <div class="form_actions">
+                            <button type="submit">Add Prescription</button>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+            <!-- INVENTORY -->
+            <div id="inventory" class="content">
+
+                <h2>Inventory Requests</h2>
+
+                <div class="apt_btns">
+                    <button onclick="showInventoryTab('inventory_list', this)" class="active">
+                        Request List
+                    </button>
+                    <button onclick="showInventoryTab('add_inventory', this)">
+                        Add Request
+                    </button>
+                </div>
+
+                <!-- REQUEST LIST -->
+                <div id="inventory_list" class="apt_content active">
+                    <div class="tb">
+                        <table id="inventory_table">
+                            <thead>
+                                <tr>
+                                    <th>Request ID</th>
+                                    <th>Item</th>
+                                    <th>Quantity</th>
+                                    <th>Priority</th>
+                                    <th>Date</th>
+                                    <th>Notes</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- DB data -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- ADD REQUEST -->
+                <div id="add_inventory" class="apt_content">
+                    <form class="apt_form" action="create_inventory_request.php" method="POST">
+
+                        <div class="form_row">
+                            <label>Item Name</label>
+                            <input type="text" name="item_name" required>
+                        </div>
+
+                        <div class="form_row">
+                            <label>Quantity</label>
+                            <input type="number" name="quantity" min="1" required>
+                        </div>
+
+                        <div class="form_row">
+                            <label>Priority</label>
+                            <select name="priority" required>
+                                <option value="">Select Priority</option>
+                                <option value="High">High</option>
+                                <option value="Normal">Normal</option>
+                                <option value="Low">Low</option>
+                            </select>
+                        </div>
+
+                        <div class="form_row full">
+                            <label>Notes</label>
+                            <textarea name="notes" placeholder="Optional notes..."></textarea>
+                        </div>
+
+                        <div class="form_actions">
+                            <button type="submit">Submit Request</button>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+            <!-- TELEMEDICINE -->
+            <div id="telemedicine" class="content">
+
+                <h2>Telemedicine</h2>
+
+                <div class="apt_btns">
+                    <button onclick="showTelemedicineTab('tele_list', this)" class="active">
+                        Session List
+                    </button>
+                    <button onclick="showTelemedicineTab('add_tele', this)">
+                        Schedule Session
+                    </button>
+                </div>
+
+                <!-- SESSION LIST -->
+                <div id="tele_list" class="apt_content active">
+                    <div class="tb">
+                        <table id="session_table">
+                            <thead>
+                                <tr>
+                                    <th>Session ID</th>
+                                    <th>Patient</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Note</th>
+                                    <th>Link</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- DB data -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- ADD TELE SESSION -->
+                <div id="add_tele" class="apt_content">
+                    <form class="apt_form" action="create_telemedicine.php" method="POST">
+
+                        <div class="form_row">
+                            <label>Patient Name</label>
+                            <input type="text" name="patient_name" required>
+                        </div>
+
+                        <div class="form_row">
+                            <label>Date</label>
+                            <input type="date" name="session_date" required>
+                        </div>
+
+                        <div class="form_row">
+                            <label>Time</label>
+                            <input type="time" name="session_time" required>
+                        </div>
+
+                        <div class="form_row">
+                            <label>Notes</label>
+                            <input type="text" name="notes" placeholder="e.g. General Consultation" required>
+                        </div>
+
+                        <div class="form_row full">
+                            <label>Meeting Link</label>
+                            <input type="url" name="meeting_link" placeholder="https://..." required>
+                        </div>
+
+                        <div class="form_actions">
+                            <button type="submit">Schedule Session</button>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+
+
+            <!-- SETTINGS -->
+            <div id="settings" class="content">
+                <h2>Settings</h2>
+                <div class="settings_form">
+                    <div class="settings_row">
+                        <label>Display Name</label>
+                        <input type="text" id="setting_name" value="Dr. Nikhil">
+                    </div>
+
+                    <div class="settings_row">
+                        <label>Email</label>
+                        <input type="email" id="setting_email" value="nikhil@example.com">
+                    </div>
+
+                    <div class="settings_row">
+                        <label>Change Password</label>
+                        <input type="password" id="new_password">
+                        <div class="pw_row">
+                            <label>
+                                <input type="checkbox" id="show_pass" onchange="toggleShowPassword()">
+                                Show password
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="settings_actions">
+                        <button type="button" onclick="saveSettings()">Save</button>
+                        <button type="button" onclick="resetSettings()">Reset</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="overlay" onclick="toggleSidebar()"></div>
+
+    <script src="doc1.js"></script>
+
+</body>
+
+</html>
